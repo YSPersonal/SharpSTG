@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 namespace SharpSTG
 {
    
+    
     class StgCharacter
     {
+        
         protected Texture texture=null;
         protected float zoomrate =10;
         protected float textureWidth =1;
@@ -18,7 +20,14 @@ namespace SharpSTG
         protected Vector2[] IdleTexturePos=null;
         protected Vector2[] LeftTexturePos=null;
         protected Vector2[] RightTexturePos=null;
-        
+
+        protected RectangleF[] IdleUVs;
+        protected RectangleF[] Idle2LeftUVs;
+        protected RectangleF[] LeftUVs;
+        protected RectangleF[] Idle2RightUVs;
+        protected RectangleF[] RightUVs;
+
+
         VertexBuffer vbuffer;
         long lefttime = 0;
         long righttime = 0;
@@ -29,6 +38,7 @@ namespace SharpSTG
         public float Height { get { return zoomrate * textureHeight; } }
         public void AnimationFrameUpdate(int direction)
         {
+            
             if (direction > 0)
             {
                 righttime += Time.DeltaTime;
@@ -63,6 +73,24 @@ namespace SharpSTG
         }
 
        
+        RectangleF getRect()
+        {
+            if (lefttime > 0)
+            {
+                long i = lefttime / 50;
+                if (i < Idle2LeftUVs.Length)
+                    return Idle2LeftUVs[i];
+                return LeftUVs[i % LeftUVs.Length];
+            }
+            else if (righttime > 0)
+            {
+                long i = righttime / 50;
+                if (i < Idle2RightUVs.Length)
+                    return Idle2RightUVs[i];
+                return RightUVs[i % RightUVs.Length];
+            }
+            else return IdleUVs[(Time.TotalTime / 50) % IdleUVs.Length];
+        }
                 
         public void DrawSprite()
         {
