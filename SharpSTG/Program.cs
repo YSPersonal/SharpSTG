@@ -24,7 +24,7 @@ namespace SharpSTG
         static void Main(string[] args)
         {
             Stage stage=new Stage();
-            var form = new RenderForm("SharpDX - MiniCube Direct3D9 Sample");
+            var form = new RenderForm("SharpSTG");
             form.Width = 480;
             form.Height = 640;
             // Creates the Device
@@ -35,21 +35,21 @@ namespace SharpSTG
 
             Player c = new Reimu();
 
-            var vertices = new VertexBuffer(device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
-            vertices.Lock(0, 0, LockFlags.None).WriteRange(new[] {
-                new Vertex() { Color = Color.Red, Position = new Vector4(400.0f, 100.0f, 0.5f, 1.0f) },
-                new Vertex() { Color = Color.Blue, Position = new Vector4(650.0f, 500.0f, 0.5f, 1.0f) },
-                new Vertex() { Color = Color.Green, Position = new Vector4(150.0f, 500.0f, 0.5f, 1.0f) }
-            });
-            vertices.Unlock();
+            //var vertices = new VertexBuffer(device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
+            //vertices.Lock(0, 0, LockFlags.None).WriteRange(new[] {
+            //    new Vertex() { Color = Color.Red, Position = new Vector4(400.0f, 100.0f, 0.5f, 1.0f) },
+            //    new Vertex() { Color = Color.Blue, Position = new Vector4(650.0f, 500.0f, 0.5f, 1.0f) },
+            //    new Vertex() { Color = Color.Green, Position = new Vector4(150.0f, 500.0f, 0.5f, 1.0f) }
+            //});
+            //vertices.Unlock();
 
-            var vertexElems = new[] {
-                new VertexElement(0, 0, DeclarationType.Float4, DeclarationMethod.Default, DeclarationUsage.PositionTransformed, 0),
-                new VertexElement(0, 16, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0),
-                VertexElement.VertexDeclarationEnd
-            };
+            //var vertexElems = new[] {
+            //    new VertexElement(0, 0, DeclarationType.Float4, DeclarationMethod.Default, DeclarationUsage.PositionTransformed, 0),
+            //    new VertexElement(0, 16, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0),
+            //    VertexElement.VertexDeclarationEnd
+            //};
 
-            var vertexDecl = new VertexDeclaration(device, vertexElems);
+            //var vertexDecl = new VertexDeclaration(device, vertexElems);
             //form.KeyDown += c.OnKeyDown;
             //c.SetEventHandler(form);
 
@@ -91,9 +91,9 @@ namespace SharpSTG
                 device.SetRenderState(RenderState.AlphaBlendEnable, false);
                 device.SetRenderState(RenderState.SourceBlend, 5);
 
-                device.SetStreamSource(0, vertices, 0, 20);
-                device.VertexDeclaration = vertexDecl;
-                device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+                //device.SetStreamSource(0, vertices, 0, 20);
+                //device.VertexDeclaration = vertexDecl;
+                //device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
                 //Debug.DrawText(string.Format("{0} fps", Time.DeltaTime), 0, 0);
                 c.Draw();
                 stage.FrameUpdate();
@@ -106,7 +106,7 @@ namespace SharpSTG
                 Input.Global.ClearPressedEvent();
             });
 
-            vertices.Dispose();
+            //vertices.Dispose();
             device.Dispose();
             direct3D.Dispose();
         }
