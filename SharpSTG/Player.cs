@@ -12,15 +12,15 @@ namespace SharpSTG
 {
     class Player : StgCharacter
     {
-        
+
         public AutoFire AutoFire { get; set; }
         public Vector3 Position { get; set; }
-     
+
         public float Speed { get; protected set; }
         public float SlowSpeed { get; protected set; }
 
         public Player()
-        {          
+        {
             Speed = 60;
             SlowSpeed = 20;
             AutoFire = new AutoFire(() =>
@@ -44,7 +44,7 @@ namespace SharpSTG
             device.SetTransform(TransformState.World, mat);
 
             DrawSprite();
-          
+
         }
 
         protected virtual void OnMove(Vector3 position, Vector3 velocity)
@@ -90,7 +90,7 @@ namespace SharpSTG
         //BulletManager bulletManager = new BulletManager();
         protected List<Bullet> bullets = new List<Bullet>();
         public virtual void Fire()
-        {        
+        {
         }
 
     }
@@ -109,46 +109,86 @@ namespace SharpSTG
 
         }
         public Reimu()
-        {            
+        {
             texture = Resource.textures["reimu"];
-            textureWidth = 0.125f;
-            textureHeight = 0.1875f;
+            uvWidth = 0.125f;
+            uvHeight = 0.1875f;
             zoomrate = 100;
-            IdleTexturePos = new Vector2[] {
-                new Vector2(0.125f*0,0),
-                new Vector2(0.125f*1,0),
-                new Vector2(0.125f*2,0),
-                new Vector2(0.125f*3,0),
-                new Vector2(0.125f*4,0),
-                new Vector2(0.125f*5,0),
-                new Vector2(0.125f*6,0),
-                new Vector2(0.125f*7,0),
+
+            IdleUVs = new QuadTexRect[] {
+                new QuadTexRect(0.125f*0,0,0.125f*1,0.1875f),
+                new QuadTexRect(0.125f*1,0,0.125f*2,0.1875f),
+                new QuadTexRect(0.125f*2,0,0.125f*3,0.1875f),
+                new QuadTexRect(0.125f*3,0,0.125f*4,0.1875f),
+                new QuadTexRect(0.125f*4,0,0.125f*5,0.1875f),
+                new QuadTexRect(0.125f*5,0,0.125f*6,0.1875f),
+                new QuadTexRect(0.125f*6,0,0.125f*7,0.1875f),
+                new QuadTexRect(0.125f*7,0,0.125f*8,0.1875f),
             };
 
-            LeftTexturePos = new Vector2[] {
-                new Vector2(0.125f*0,0.1875f),
-                new Vector2(0.125f*1,0.1875f),
-                new Vector2(0.125f*2,0.1875f),
-                new Vector2(0.125f*3,0.1875f),
-                new Vector2(0.125f*4,0.1875f),
-                new Vector2(0.125f*5,0.1875f),
-                new Vector2(0.125f*6,0.1875f),
-                new Vector2(0.125f*7,0.1875f),
+            Idle2LeftUVs = new QuadTexRect[] {
+                new QuadTexRect(0.125f*0,0.1875f,0.125f*1,0.375f),
+                new QuadTexRect(0.125f*1,0.1875f,0.125f*2,0.375f),
+                new QuadTexRect(0.125f*2,0.1875f,0.125f*3,0.375f),
+                new QuadTexRect(0.125f*3,0.1875f,0.125f*4,0.375f),
             };
 
-            RightTexturePos = new Vector2[]
-            {
-                new Vector2(0.125f*0,0.375f),
-                new Vector2(0.125f*1,0.375f),
-                new Vector2(0.125f*2,0.375f),
-                new Vector2(0.125f*3,0.375f),
-                new Vector2(0.125f*4,0.375f),
-                new Vector2(0.125f*5,0.375f),
-                new Vector2(0.125f*6,0.375f),
-                new Vector2(0.125f*7,0.375f),
+            Idle2RightUVs = new QuadTexRect[] {
+                new QuadTexRect(0.125f*0,0.375f,0.125f*1,0.5625f),
+                new QuadTexRect(0.125f*1,0.375f,0.125f*2,0.5625f),
+                new QuadTexRect(0.125f*2,0.375f,0.125f*3,0.5625f),
+                new QuadTexRect(0.125f*3,0.375f,0.125f*4,0.5625f),
             };
 
-           
-        }       
+            LeftUVs = new QuadTexRect[] {
+                new QuadTexRect(0.125f*4,0.1875f,0.125f*5,0.375f),
+                new QuadTexRect(0.125f*5,0.1875f,0.125f*6,0.375f),
+                new QuadTexRect(0.125f*6,0.1875f,0.125f*7,0.375f),
+                new QuadTexRect(0.125f*7,0.1875f,0.125f*8,0.375f),
+            };
+
+            RightUVs = new QuadTexRect[] {
+                new QuadTexRect(0.125f*4,0.375f,0.125f*5,0.5625f),
+                new QuadTexRect(0.125f*5,0.375f,0.125f*6,0.5625f),
+                new QuadTexRect(0.125f*6,0.375f,0.125f*7,0.5625f),
+                new QuadTexRect(0.125f*7,0.375f,0.125f*8,0.5625f),
+            };
+            //Console.WriteLine("{0}", IdleUVs[0].Left);
+            //IdleTexturePos = new Vector2[] {
+            //    new Vector2(0.125f*0,0),
+            //    new Vector2(0.125f*1,0),
+            //    new Vector2(0.125f*2,0),
+            //    new Vector2(0.125f*3,0),
+            //    new Vector2(0.125f*4,0),
+            //    new Vector2(0.125f*5,0),
+            //    new Vector2(0.125f*6,0),
+            //    new Vector2(0.125f*7,0),
+            //};
+
+            //LeftTexturePos = new Vector2[] {
+            //    new Vector2(0.125f*0,0.1875f),
+            //    new Vector2(0.125f*1,0.1875f),
+            //    new Vector2(0.125f*2,0.1875f),
+            //    new Vector2(0.125f*3,0.1875f),
+            //    new Vector2(0.125f*4,0.1875f),
+            //    new Vector2(0.125f*5,0.1875f),
+            //    new Vector2(0.125f*6,0.1875f),
+            //    new Vector2(0.125f*7,0.1875f),
+            //};
+
+            //RightTexturePos = new Vector2[]
+            //{
+            //    new Vector2(0.125f*0,0.375f),
+            //    new Vector2(0.125f*1,0.375f),
+            //    new Vector2(0.125f*2,0.375f),
+            //    new Vector2(0.125f*3,0.375f),
+            //    new Vector2(0.125f*4,0.375f),
+            //    new Vector2(0.125f*5,0.375f),
+            //    new Vector2(0.125f*6,0.375f),
+            //    new Vector2(0.125f*7,0.375f),
+            //};
+
+
+        }
     }
 }

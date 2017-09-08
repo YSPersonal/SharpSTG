@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace SharpSTG
 {
-    enum EnemyState
-    {
-        BeforeSpawn,
-        Alive,
-        Timeout,
-        Killed
-    }
+    //enum EnemyState
+    //{
+    //    BeforeSpawn,
+    //    Alive,
+    //    Timeout,
+    //    Killed
+    //}
 
     class Enemy : StgCharacter
     {
-        EnemyState state = EnemyState.BeforeSpawn;
+        //EnemyState state = EnemyState.BeforeSpawn;
         //public SpriteQuad SpriteQuad { get; set; }
         public Vector3 Position { get; private set; }
         public virtual void Draw()
@@ -61,22 +61,25 @@ namespace SharpSTG
         public StaticEnemy(string textureName)
         {
             texture = Resource.textures[textureName];
-            IdleTexturePos = new Vector2[] { Vector2.Zero };
-            LeftTexturePos = new Vector2[] { Vector2.Zero };
-            RightTexturePos = new Vector2[] { Vector2.Zero };
+            
         }
     }
 
     class DemoEnemy : Enemy
     {
-        public DemoEnemy(Path path = null, long showtime = 0)
+        public DemoEnemy()
         {
-            texture = Resource.textures["1"];
-            IdleTexturePos = new Vector2[] { Vector2.Zero };
-            LeftTexturePos = new Vector2[] { Vector2.Zero };
-            RightTexturePos = new Vector2[] { Vector2.Zero };
-            this.Path = path;
-            this.ShowTime = showtime;
+            Speed = 50;
+            uvWidth = 0.09375f;
+            uvHeight = 0.0625f;
+            zoomrate = 200;
+            texture = Resource.textures["enemy1"];
+            IdleUVs = new QuadTexRect[] {
+                new QuadTexRect(0.09375f*0,0,0.09375f*1,0.0625f),
+                new QuadTexRect(0.09375f*1,0,0.09375f*2,0.0625f),
+                new QuadTexRect(0.09375f*2,0,0.09375f*3,0.0625f),
+                new QuadTexRect(0.09375f*3,0,0.09375f*4,0.0625f),
+            };
         }
     }
 

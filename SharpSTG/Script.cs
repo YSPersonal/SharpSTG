@@ -92,7 +92,7 @@ namespace SharpSTG
                 starttime = script.stage.time.CurrentTime;
             if (starttime + waitingtime >= script.stage.time.CurrentTime)
             {
-                Console.WriteLine(starttime + waitingtime - script.stage.time.CurrentTime);
+                //Console.WriteLine(starttime + waitingtime - script.stage.time.CurrentTime);
                 return false;
             }
             else

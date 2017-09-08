@@ -70,10 +70,10 @@ namespace SharpSTG
 
             stage.script.command = new ScriptCommand[] {
                 Script.CreateCommand("SharpSTG.SCTag begin"),
-                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.StaticEnemy 1000 path0 1"),
-                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.StaticEnemy 1200 path0 1"),
-                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.StaticEnemy 1400 path0 1"),
-                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.StaticEnemy 1600 path0 1"),
+                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.DemoEnemy 1000 path0"),
+                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.DemoEnemy 1200 path0"),
+                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.DemoEnemy 1400 path0"),
+                Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.DemoEnemy 1600 path0"),
                 Script.CreateCommand("SharpSTG.SCWait 2000"),
                 Script.CreateCommand("SharpSTG.SCRepeat begin")
                 
