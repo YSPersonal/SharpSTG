@@ -8,18 +8,8 @@ using System.Threading.Tasks;
 
 namespace SharpSTG
 {
-    //enum EnemyState
-    //{
-    //    BeforeSpawn,
-    //    Alive,
-    //    Timeout,
-    //    Killed
-    //}
-
     class Enemy : StgCharacter
     {
-        //EnemyState state = EnemyState.BeforeSpawn;
-        //public SpriteQuad SpriteQuad { get; set; }
         public Vector3 Position { get; private set; }
         public virtual void Draw()
         {
@@ -242,7 +232,6 @@ namespace SharpSTG
             device.SetTransform(TransformState.World, Matrix.Identity);
             device.SetRenderState(RenderState.Lighting, false);
             device.SetRenderState(RenderState.AlphaBlendEnable, false);
-            //device.SetRenderState(RenderState.Lighting, false);
             device.VertexFormat = VertexFormat.Position;
             device.DrawUserPrimitives<Vector3>(PrimitiveType.LineStrip, v.Length - 1, v);
 

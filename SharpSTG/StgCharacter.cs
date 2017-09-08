@@ -41,8 +41,6 @@ namespace SharpSTG
         VertexBuffer vbuffer;
         long lefttime = 0;
         long righttime = 0;
-        //long LeftDuration { get { return (LeftTexturePos.Length - 1) * 50; } }
-        //long RightDuration { get { return (RightTexturePos.Length - 1) * 50; } }
 
         public float Width { get { return zoomrate * uvWidth; } }
         public float Height { get { return zoomrate * uvHeight; } }
@@ -52,13 +50,11 @@ namespace SharpSTG
             if (direction > 0)
             {
                 righttime += Time.DeltaTime;
-                //righttime = Math.Min(RightDuration, righttime);
                 lefttime = 0;
             }
             else if (direction < 0)
             {
                 lefttime += Time.DeltaTime;
-                //lefttime = Math.Min(LeftDuration, lefttime);
                 righttime = 0;
             }
             else
@@ -118,7 +114,6 @@ namespace SharpSTG
             device.SetStreamSource(0, vbuffer, 0, sizeof(float) * 5);
             device.SetRenderState(RenderState.AlphaBlendEnable, true);
             device.DrawPrimitives(PrimitiveType.TriangleFan, 0, 2);
-            //device.DrawUserPrimitives<PTVertex>(PrimitiveType.TriangleFan, 2, buffer);
             device.SetTexture(0, null);
         }
     }
