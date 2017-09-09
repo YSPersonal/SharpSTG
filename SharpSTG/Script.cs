@@ -8,7 +8,7 @@ namespace SharpSTG
 {
     class ScriptCommand
     {
-        public virtual bool Do(Script script) { return true; }
+        public virtual bool Do() { return true; }
         public virtual void OnCreate(string parameter) { }
     }
 
@@ -19,11 +19,11 @@ namespace SharpSTG
         public Type type;
         public object[] parameter;
 
-        public override bool Do(Script script)
+        public override bool Do()
         {
             Enemy e = (Enemy)System.Activator.CreateInstance(type, parameter);
             //throw new NotImplementedException();
-            script.stage.SpawnEnemyLater(e, delay, path);
+            STG.Stage.SpawnEnemyLater(e, delay, path);
             return true;
         }
 
@@ -44,9 +44,9 @@ namespace SharpSTG
 
     class SCClear : ScriptCommand
     {
-        public override bool Do(Script script)
+        public override bool Do()
         {
-            script.stage.enemylist.Clear();
+            STG.Stage.enemylist.Clear();
             return true;
         }
     }
@@ -56,10 +56,10 @@ namespace SharpSTG
         public string repeatcondition;
         public string jumptag;
 
-        public override bool Do(Script script)
+        public override bool Do()
         {
-            if (Script.check(script, repeatcondition))
-                script.back(jumptag);
+            if (Script.check(STG.Stage.script, repeatcondition))
+                STG.Stage.script.back(jumptag);
             return true;
         }
         public override void OnCreate(string parameter)
@@ -86,11 +86,11 @@ namespace SharpSTG
     {
         long starttime = -1;
         public long waitingtime = 0;
-        public override bool Do(Script script)
+        public override bool Do()
         {
             if (starttime < 0)
-                starttime = script.stage.time.CurrentTime;
-            if (starttime + waitingtime >= script.stage.time.CurrentTime)
+                starttime = STG.Stage.time.CurrentTime;
+            if (starttime + waitingtime >= STG.Stage.time.CurrentTime)
             {
                 //Console.WriteLine(starttime + waitingtime - script.stage.time.CurrentTime);
                 return false;
@@ -141,16 +141,14 @@ namespace SharpSTG
                     return true;
 
                 case "enemy_clear":
-                    return script.stage.enemylist.Count == 0;
+                    return STG.Stage.enemylist.Count == 0;
             }
             return false;
         }
 
         int index = 0;
         public ScriptCommand[] command = null;
-        public Stage stage;
-        public Enemy enemy;
-        public Player player;
+        
          
         public void back(string name)
         {
@@ -175,7 +173,7 @@ namespace SharpSTG
             while (index >= 0 && index < command.Length)
             {
                 //bool isbreak = command[index].scriptbreak;
-                if (command[index].Do(this))
+                if (command[index].Do())
                     index++;
                 else
                     break;

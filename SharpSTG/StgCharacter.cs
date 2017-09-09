@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace SharpSTG
 {
-
+    /// <summary>
+    /// 定义贴图的矩形区域，用于描述2D角色的UV贴图坐标
+    /// </summary>
     struct QuadTexRect
     {
         public float Left;

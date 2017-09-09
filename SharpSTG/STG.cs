@@ -39,10 +39,10 @@ namespace SharpSTG
         public static void Run()
         {
             Player player = new Reimu();
-            Stage.Start();
+            Stage.time = new Timeflow();
+            Stage.time.Pause = false;
             RenderLoop.Run(form, () =>
-            {
-               
+            {              
 
                 Time.FrameUpdate();
                 device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.CornflowerBlue, 1.0f, 0);
