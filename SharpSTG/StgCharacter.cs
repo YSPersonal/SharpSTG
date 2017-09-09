@@ -109,10 +109,16 @@ namespace SharpSTG
             vbuffer.Unlock();
 
             Device device = Resource.device;
+
+            device.SetRenderState(RenderState.Lighting, false);
+            device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            device.SetRenderState(RenderState.SourceBlend, 5);
+            device.SetRenderState(RenderState.DestinationBlend, 6);
+
             device.SetTexture(0, texture);
             device.VertexFormat = VertexFormat.Position | VertexFormat.Texture1;
             device.SetStreamSource(0, vbuffer, 0, sizeof(float) * 5);
-            device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            //device.SetRenderState(RenderState.AlphaBlendEnable, true);
             device.DrawPrimitives(PrimitiveType.TriangleFan, 0, 2);
             device.SetTexture(0, null);
         }

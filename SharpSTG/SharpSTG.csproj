@@ -75,6 +75,7 @@
     <Compile Include="Script.cs" />
     <Compile Include="SpriteQuad.cs" />
     <Compile Include="Stage.cs" />
+    <Compile Include="STG.cs" />
     <Compile Include="StgCharacter.cs" />
     <Compile Include="StgFrame.cs" />
     <Compile Include="Time.cs" />

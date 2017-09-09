@@ -30,23 +30,7 @@ namespace SharpSTG
 
         }
 
-        public void Draw(Vector3 position, Device device, bool setstates = true)
-        {
-            if (setstates)
-            {
-                device.SetRenderState(RenderState.Lighting, false);
-                device.SetRenderState(RenderState.AlphaBlendEnable, true);
-                device.SetRenderState(RenderState.SourceBlend, 5);
-                device.SetRenderState(RenderState.DestinationBlend, 6);
-            }
-
-            Matrix mat = Matrix.Translation(position);
-            device.SetTransform(TransformState.World, mat);
-
-            DrawSprite();
-
-        }
-
+       
         protected virtual void OnMove(Vector3 position, Vector3 velocity)
         {
             AnimationFrameUpdate((int)(velocity.X * 1000));
@@ -72,7 +56,9 @@ namespace SharpSTG
             Position += direction * Time.DeltaTimeSeconds * speed;
             Position = StgFrame.Global.InBox(Position, Width / 2, Height / 2);
 
-            Draw(Position, Resource.device);
+            Matrix mat = Matrix.Translation(Position);
+            Resource.device.SetTransform(TransformState.World, mat);
+            DrawSprite();
 
             foreach (var b in bullets)
             {
@@ -153,42 +139,7 @@ namespace SharpSTG
                 new QuadTexRect(0.125f*6,0.375f,0.125f*7,0.5625f),
                 new QuadTexRect(0.125f*7,0.375f,0.125f*8,0.5625f),
             };
-            //Console.WriteLine("{0}", IdleUVs[0].Left);
-            //IdleTexturePos = new Vector2[] {
-            //    new Vector2(0.125f*0,0),
-            //    new Vector2(0.125f*1,0),
-            //    new Vector2(0.125f*2,0),
-            //    new Vector2(0.125f*3,0),
-            //    new Vector2(0.125f*4,0),
-            //    new Vector2(0.125f*5,0),
-            //    new Vector2(0.125f*6,0),
-            //    new Vector2(0.125f*7,0),
-            //};
-
-            //LeftTexturePos = new Vector2[] {
-            //    new Vector2(0.125f*0,0.1875f),
-            //    new Vector2(0.125f*1,0.1875f),
-            //    new Vector2(0.125f*2,0.1875f),
-            //    new Vector2(0.125f*3,0.1875f),
-            //    new Vector2(0.125f*4,0.1875f),
-            //    new Vector2(0.125f*5,0.1875f),
-            //    new Vector2(0.125f*6,0.1875f),
-            //    new Vector2(0.125f*7,0.1875f),
-            //};
-
-            //RightTexturePos = new Vector2[]
-            //{
-            //    new Vector2(0.125f*0,0.375f),
-            //    new Vector2(0.125f*1,0.375f),
-            //    new Vector2(0.125f*2,0.375f),
-            //    new Vector2(0.125f*3,0.375f),
-            //    new Vector2(0.125f*4,0.375f),
-            //    new Vector2(0.125f*5,0.375f),
-            //    new Vector2(0.125f*6,0.375f),
-            //    new Vector2(0.125f*7,0.375f),
-            //};
-
-
+          
         }
     }
 }
