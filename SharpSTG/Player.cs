@@ -73,8 +73,7 @@ namespace SharpSTG
             }
         }
 
-        //BulletManager bulletManager = new BulletManager();
-        protected List<Bullet> bullets = new List<Bullet>();
+        protected List<PlayerBullet> bullets = new List<PlayerBullet>();
         public virtual void Fire()
         {
         }
@@ -86,11 +85,11 @@ namespace SharpSTG
         public override void Fire()
         {
             var b = new DirectionalBullet(Position + Vector3.Left * 6, 30);
-            b.Sprite = Resource.bulletSprites["reimu_direct"];
+            b.bulletRect = Resource.rectangle["reimu_bullet1"];
             bullets.Add(b);
 
             b = new DirectionalBullet(Position + Vector3.Right * 6, 0);
-            b.Sprite = Resource.bulletSprites["reimu_direct"];
+            b.bulletRect = Resource.rectangle["reimu_bullet1"];
             bullets.Add(b);
 
         }
@@ -101,43 +100,43 @@ namespace SharpSTG
             uvHeight = 0.1875f;
             zoomrate = 100;
 
-            IdleUVs = new QuadTexRect[] {
-                new QuadTexRect(0.125f*0,0,0.125f*1,0.1875f),
-                new QuadTexRect(0.125f*1,0,0.125f*2,0.1875f),
-                new QuadTexRect(0.125f*2,0,0.125f*3,0.1875f),
-                new QuadTexRect(0.125f*3,0,0.125f*4,0.1875f),
-                new QuadTexRect(0.125f*4,0,0.125f*5,0.1875f),
-                new QuadTexRect(0.125f*5,0,0.125f*6,0.1875f),
-                new QuadTexRect(0.125f*6,0,0.125f*7,0.1875f),
-                new QuadTexRect(0.125f*7,0,0.125f*8,0.1875f),
+            IdleUVs = new TexRect[] {
+                new TexRect(0.125f*0,0,0.125f*1,0.1875f),
+                new TexRect(0.125f*1,0,0.125f*2,0.1875f),
+                new TexRect(0.125f*2,0,0.125f*3,0.1875f),
+                new TexRect(0.125f*3,0,0.125f*4,0.1875f),
+                new TexRect(0.125f*4,0,0.125f*5,0.1875f),
+                new TexRect(0.125f*5,0,0.125f*6,0.1875f),
+                new TexRect(0.125f*6,0,0.125f*7,0.1875f),
+                new TexRect(0.125f*7,0,0.125f*8,0.1875f),
             };
 
-            Idle2LeftUVs = new QuadTexRect[] {
-                new QuadTexRect(0.125f*0,0.1875f,0.125f*1,0.375f),
-                new QuadTexRect(0.125f*1,0.1875f,0.125f*2,0.375f),
-                new QuadTexRect(0.125f*2,0.1875f,0.125f*3,0.375f),
-                new QuadTexRect(0.125f*3,0.1875f,0.125f*4,0.375f),
+            Idle2LeftUVs = new TexRect[] {
+                new TexRect(0.125f*0,0.1875f,0.125f*1,0.375f),
+                new TexRect(0.125f*1,0.1875f,0.125f*2,0.375f),
+                new TexRect(0.125f*2,0.1875f,0.125f*3,0.375f),
+                new TexRect(0.125f*3,0.1875f,0.125f*4,0.375f),
             };
 
-            Idle2RightUVs = new QuadTexRect[] {
-                new QuadTexRect(0.125f*0,0.375f,0.125f*1,0.5625f),
-                new QuadTexRect(0.125f*1,0.375f,0.125f*2,0.5625f),
-                new QuadTexRect(0.125f*2,0.375f,0.125f*3,0.5625f),
-                new QuadTexRect(0.125f*3,0.375f,0.125f*4,0.5625f),
+            Idle2RightUVs = new TexRect[] {
+                new TexRect(0.125f*0,0.375f,0.125f*1,0.5625f),
+                new TexRect(0.125f*1,0.375f,0.125f*2,0.5625f),
+                new TexRect(0.125f*2,0.375f,0.125f*3,0.5625f),
+                new TexRect(0.125f*3,0.375f,0.125f*4,0.5625f),
             };
 
-            LeftUVs = new QuadTexRect[] {
-                new QuadTexRect(0.125f*4,0.1875f,0.125f*5,0.375f),
-                new QuadTexRect(0.125f*5,0.1875f,0.125f*6,0.375f),
-                new QuadTexRect(0.125f*6,0.1875f,0.125f*7,0.375f),
-                new QuadTexRect(0.125f*7,0.1875f,0.125f*8,0.375f),
+            LeftUVs = new TexRect[] {
+                new TexRect(0.125f*4,0.1875f,0.125f*5,0.375f),
+                new TexRect(0.125f*5,0.1875f,0.125f*6,0.375f),
+                new TexRect(0.125f*6,0.1875f,0.125f*7,0.375f),
+                new TexRect(0.125f*7,0.1875f,0.125f*8,0.375f),
             };
 
-            RightUVs = new QuadTexRect[] {
-                new QuadTexRect(0.125f*4,0.375f,0.125f*5,0.5625f),
-                new QuadTexRect(0.125f*5,0.375f,0.125f*6,0.5625f),
-                new QuadTexRect(0.125f*6,0.375f,0.125f*7,0.5625f),
-                new QuadTexRect(0.125f*7,0.375f,0.125f*8,0.5625f),
+            RightUVs = new TexRect[] {
+                new TexRect(0.125f*4,0.375f,0.125f*5,0.5625f),
+                new TexRect(0.125f*5,0.375f,0.125f*6,0.5625f),
+                new TexRect(0.125f*6,0.375f,0.125f*7,0.5625f),
+                new TexRect(0.125f*7,0.375f,0.125f*8,0.5625f),
             };
           
         }

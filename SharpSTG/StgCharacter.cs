@@ -11,22 +11,22 @@ namespace SharpSTG
     /// <summary>
     /// 定义贴图的矩形区域，用于描述2D角色的UV贴图坐标
     /// </summary>
-    struct QuadTexRect
+    struct TexRect
     {
         public float Left;
         public float Top;
         public float Right;
         public float Bottom;
-        public QuadTexRect(float left, float top, float right, float bottom)
+        public TexRect(float left, float top, float right, float bottom)
         {
             this.Left = left;
             this.Top = top;
             this.Right = right;
             this.Bottom = bottom;
         }
-        static QuadTexRect[] one = new QuadTexRect[] { new QuadTexRect(0, 0, 1, 1) };
+        static TexRect[] one = new TexRect[] { new TexRect(0, 0, 1, 1) };
 
-        internal static QuadTexRect[] One { get => one; }
+        internal static TexRect[] One { get => one; }
     }
     class StgCharacter
     {
@@ -36,11 +36,11 @@ namespace SharpSTG
         protected float uvWidth = 1;
         protected float uvHeight = 1;
 
-        protected QuadTexRect[] IdleUVs = QuadTexRect.One;
-        protected QuadTexRect[] Idle2LeftUVs = QuadTexRect.One;
-        protected QuadTexRect[] LeftUVs = QuadTexRect.One;
-        protected QuadTexRect[] Idle2RightUVs = QuadTexRect.One;
-        protected QuadTexRect[] RightUVs = QuadTexRect.One;
+        protected TexRect[] IdleUVs = TexRect.One;
+        protected TexRect[] Idle2LeftUVs = TexRect.One;
+        protected TexRect[] LeftUVs = TexRect.One;
+        protected TexRect[] Idle2RightUVs = TexRect.One;
+        protected TexRect[] RightUVs = TexRect.One;
         
         VertexBuffer vbuffer;
         long lefttime = 0;
@@ -74,7 +74,7 @@ namespace SharpSTG
         
         int interval = 100;
 
-        QuadTexRect getRect()
+        TexRect getRect()
         {
             if (lefttime > 0)
             {
@@ -101,7 +101,7 @@ namespace SharpSTG
             float hw = Width / 2;
             float hh = Height / 2;
            
-            QuadTexRect rc = getRect();
+            TexRect rc = getRect();
                       
 
             vbuffer.Lock(0, 0, LockFlags.None).WriteRange(new[] {

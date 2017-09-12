@@ -24,11 +24,11 @@ namespace SharpSTG
         public Path Path { get; set; }
         public long ShowTime { get; set; }
         public float Speed = 100f;
-        bool timeout = false;
-        public bool IsTimeout { get { return timeout; } }
+        //bool timeout = false;
+        public bool IsTimeout { get; private set; } = false;
         public void TimeOut()
         {
-            timeout = true;
+            IsTimeout = true;
         }
         public bool OnStage { get { return time.CurrentTime >= ShowTime; } }
         public void FrameUpdate()
@@ -39,21 +39,25 @@ namespace SharpSTG
             if (Path != null)
                 Position = Path.GetPosition(distance);
         }
+
+        Script script=null;
+
         public virtual void OnUpdate()
         {
-
+            if (script != null)
+                script.FrameUpdate();
         }
 
     }
 
-    class StaticEnemy : Enemy
-    {
-        public StaticEnemy(string textureName)
-        {
-            texture = Resource.textures[textureName];
+    //class StaticEnemy : Enemy
+    //{
+    //    public StaticEnemy(string textureName)
+    //    {
+    //        texture = Resource.textures[textureName];
             
-        }
-    }
+    //    }
+    //}
 
     class DemoEnemy : Enemy
     {
@@ -64,11 +68,11 @@ namespace SharpSTG
             uvHeight = 0.0625f;
             zoomrate = 200;
             texture = Resource.textures["enemy1"];
-            IdleUVs = new QuadTexRect[] {
-                new QuadTexRect(0.09375f*0,0,0.09375f*1,0.0625f),
-                new QuadTexRect(0.09375f*1,0,0.09375f*2,0.0625f),
-                new QuadTexRect(0.09375f*2,0,0.09375f*3,0.0625f),
-                new QuadTexRect(0.09375f*3,0,0.09375f*4,0.0625f),
+            IdleUVs = new TexRect[] {
+                new TexRect(0.09375f*0,0,0.09375f*1,0.0625f),
+                new TexRect(0.09375f*1,0,0.09375f*2,0.0625f),
+                new TexRect(0.09375f*2,0,0.09375f*3,0.0625f),
+                new TexRect(0.09375f*3,0,0.09375f*4,0.0625f),
             };
         }
     }
