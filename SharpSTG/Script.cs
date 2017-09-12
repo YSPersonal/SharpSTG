@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpDX;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,40 @@ namespace SharpSTG
             else
                 this.parameter = null;
 
+        }
+    }
+
+    class SCFire : ScriptCommand
+    {
+        public override bool Do()
+        {
+            DirectBullet b = new DirectBullet(start, Vector3.Down);
+            b.Speed = speed;
+            return true;
+        
+        }
+
+        Vector3 start;
+        Vector3 direction;
+        float speed;
+        public override void OnCreate(string parameter)
+        {
+            //base.OnCreate(parameter);
+            //regular check
+
+            //
+            var s = parameter.Split(' ');
+            var s0 = s[0].Split(',');
+            var s1 = s[1].Split(',');
+
+            float x0 = float.Parse(s0[0]);
+            float y0 = float.Parse(s0[1]);
+            float x1 = float.Parse(s1[0]);
+            float y1 = float.Parse(s1[1]);
+            speed = float.Parse(s[2]);
+
+            start = new Vector3(x0, y0, 0);
+            direction = new Vector3(x1, y1, 0);
         }
     }
 
@@ -103,7 +138,7 @@ namespace SharpSTG
         public override void OnCreate(string parameter)
         {
             if (parameter != null)
-                waitingtime = long.Parse(parameter);            
+                waitingtime = long.Parse(parameter);
         }
     }
 
@@ -129,7 +164,7 @@ namespace SharpSTG
             //cmdobj.rawParameter = parameter;
             cmdobj.OnCreate(parameter);
             return cmdobj;
- 
+
         }
 
         public static bool check(Script script, string condition)
@@ -147,12 +182,12 @@ namespace SharpSTG
 
         int index = 0;
         public ScriptCommand[] command = null;
-        
-         
+
+
         public void back(string name)
         {
             for (int i = index - 1; i >= 0; i--)
-                if (command[i].GetType()==typeof(SCTag))
+                if (command[i].GetType() == typeof(SCTag))
                 {
                     if ((command[i] as SCTag).name == name)
                     {

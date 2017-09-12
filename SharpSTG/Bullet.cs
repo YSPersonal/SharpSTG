@@ -5,17 +5,7 @@ using System.Collections.Generic;
 
 namespace SharpSTG
 {
-    //class BulletSprite
-    //{
-    //    public SpriteQuad quad = null;
-    //    public float angleOffset = 0;
-
-    //    public void Draw(Vector3 position, float angle)
-    //    {
-    //        quad.Draw(position, angle + angleOffset);
-    //    }
-    //}
-
+    
     class Rectangle
     {
         TexRect texRect;
@@ -75,11 +65,9 @@ namespace SharpSTG
         }
     }
 
-
-    abstract class PlayerBullet
+   
+    abstract class Bullet
     {
-        //public BulletSprite Sprite { get; set; }
-
         public Rectangle bulletRect;
 
         public long FlyingTime { get { return Time.TotalTime - StartTime; } }
@@ -89,7 +77,7 @@ namespace SharpSTG
 
         public Vector3 Position { get; protected set; }
         public float Rotation { get; protected set; }
-        public PlayerBullet()
+        public Bullet()
         {
             StartTime = Time.TotalTime;
             LifeTime = 2000;
@@ -99,15 +87,13 @@ namespace SharpSTG
         public abstract void FrameUpdate();
         public void Draw()
         {
-            //Console.WriteLine(Position);
-            //Sprite.Draw(Position, Rotation);
             bulletRect.Draw(Position, Rotation);
         }
     }
 
     class BulletManager
     {
-        List<PlayerBullet> bullets = new List<PlayerBullet>();
+        List<Bullet> bullets = new List<Bullet>();
 
         public void Draw()
         {
@@ -124,19 +110,22 @@ namespace SharpSTG
         }
     }
 
-    class DirectionalBullet : PlayerBullet
+
+
+    class DirectBullet : Bullet
     {
         Vector3 startPosition;
         Vector3 direction;
         public float Speed { get; set; } = 500;
-        public DirectionalBullet(Vector3 start, float angle)
+        public DirectBullet(Vector3 start, float angle, float speed)
         {
             startPosition = start;
             var rad = angle * Math.PI / 180;
             Rotation = (float)rad;
             direction = new Vector3(-(float)Math.Sin(rad), (float)Math.Cos(rad), 0);
+            Speed = speed;
         }
-        public DirectionalBullet(Vector3 start, Vector3 target)
+        public DirectBullet(Vector3 start, Vector3 target)
         {
             start.Z = 0;
             this.startPosition = start;
@@ -154,11 +143,11 @@ namespace SharpSTG
         }
     }
 
-    delegate void FireAction();
+    delegate void StgTimerAction();
 
-    class AutoFire
+    class StgTimer
     {
-        public FireAction Action { get; set; }
+        public StgTimerAction Action { get; set; }
         public long Interval { get; set; }
 
         public bool enable = false;
@@ -177,7 +166,7 @@ namespace SharpSTG
 
         long waitingtime = 0;
 
-        public AutoFire(FireAction action)
+        public StgTimer(StgTimerAction action)
         {
             Action = action;
             Interval = 100;

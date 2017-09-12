@@ -13,7 +13,7 @@ namespace SharpSTG
     class Player : StgCharacter
     {
 
-        public AutoFire AutoFire { get; set; }
+        public StgTimer AutoFire { get; set; }
         public Vector3 Position { get; set; }
 
         public float Speed { get; protected set; }
@@ -23,7 +23,7 @@ namespace SharpSTG
         {
             Speed = 60;
             SlowSpeed = 20;
-            AutoFire = new AutoFire(() =>
+            AutoFire = new StgTimer(() =>
             {
                 Fire();
             });
@@ -73,7 +73,7 @@ namespace SharpSTG
             }
         }
 
-        protected List<PlayerBullet> bullets = new List<PlayerBullet>();
+        protected List<Bullet> bullets = new List<Bullet>();
         public virtual void Fire()
         {
         }
@@ -84,11 +84,11 @@ namespace SharpSTG
     {
         public override void Fire()
         {
-            var b = new DirectionalBullet(Position + Vector3.Left * 6, 30);
+            var b = new DirectBullet(Position + Vector3.Left * 6, 30, 300);
             b.bulletRect = Resource.rectangle["reimu_bullet1"];
             bullets.Add(b);
 
-            b = new DirectionalBullet(Position + Vector3.Right * 6, 0);
+            b = new DirectBullet(Position + Vector3.Right * 6, 0, 300);
             b.bulletRect = Resource.rectangle["reimu_bullet1"];
             bullets.Add(b);
 

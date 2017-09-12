@@ -11,7 +11,7 @@ namespace SharpSTG
         public List<Enemy> enemylist = new List<Enemy>();
         public Timeflow time = new Timeflow();
         public Script script = new Script();
-       
+        public List<Bullet> bullets = new List<Bullet>();
         public virtual void FrameUpdate()
         {
             foreach (var e in enemylist)
