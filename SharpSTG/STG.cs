@@ -25,7 +25,8 @@ namespace SharpSTG
             form.Height = 640;
 
             D3D = new Direct3D();
-            device = new Device(D3D, 0, DeviceType.Hardware, form.Handle, CreateFlags.HardwareVertexProcessing, new PresentParameters(form.ClientSize.Width, form.ClientSize.Height));
+            device = new Device(D3D, 0, DeviceType.Hardware, form.Handle, CreateFlags.HardwareVertexProcessing, 
+                new PresentParameters(form.ClientSize.Width, form.ClientSize.Height));
             Resource.Load(device);
 
             Time.Setup();

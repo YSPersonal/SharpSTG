@@ -95,7 +95,7 @@ namespace SharpSTG
     {
         List<Bullet> bullets = new List<Bullet>();
 
-        public void Draw()
+        public void FrameUpdate()
         {
             foreach (var i in bullets)
             {
@@ -125,7 +125,7 @@ namespace SharpSTG
             direction = new Vector3(-(float)Math.Sin(rad), (float)Math.Cos(rad), 0);
             Speed = speed;
         }
-        public DirectBullet(Vector3 start, Vector3 target)
+        public DirectBullet(Vector3 start, Vector3 target, float speed)
         {
             start.Z = 0;
             this.startPosition = start;
@@ -134,7 +134,7 @@ namespace SharpSTG
             this.Rotation = (float)Math.Asin(Vector3.Cross(direction, Vector3.Up).Length());
             if (Vector3.Dot(direction, Vector3.Up) < 0)
                 Rotation = (float)Math.PI - Rotation;
-
+            this.Speed = speed;
         }
 
         public override void FrameUpdate()

@@ -47,33 +47,45 @@ namespace SharpSTG
     {
         public override bool Do()
         {
-            DirectBullet b = new DirectBullet(start, Vector3.Down);
-            b.Speed = speed;
+            DirectBullet b = null;
+            if (target != start)
+                b = new DirectBullet(start, target, speed);
+            else
+                b = new DirectBullet(start, angle, speed);
+
+            STG.Stage.bullets.Add(b);
             return true;
-        
         }
 
         Vector3 start;
-        Vector3 direction;
+        Vector3 target;
         float speed;
+        float angle;
         public override void OnCreate(string parameter)
         {
-            //base.OnCreate(parameter);
-            //regular check
-
+            
             //
             var s = parameter.Split(' ');
             var s0 = s[0].Split(',');
             var s1 = s[1].Split(',');
-
+            start = new Vector3(x0, y0, 0);
             float x0 = float.Parse(s0[0]);
             float y0 = float.Parse(s0[1]);
-            float x1 = float.Parse(s1[0]);
-            float y1 = float.Parse(s1[1]);
+
+            if (s1.Length > 1)
+            {
+                float x1 = float.Parse(s1[0]);
+                float y1 = float.Parse(s1[1]);
+                target = new Vector3(x1, y1, 0);
+                angle = 0;
+            }
+            else
+            {
+                angle = float.Parse(s[1]);
+                target = start;
+            }
             speed = float.Parse(s[2]);
 
-            start = new Vector3(x0, y0, 0);
-            direction = new Vector3(x1, y1, 0);
         }
     }
 
