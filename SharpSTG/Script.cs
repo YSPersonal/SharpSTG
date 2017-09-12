@@ -84,20 +84,19 @@ namespace SharpSTG
 
     class SCWait : ScriptCommand
     {
-        long starttime = -1;
         public long waitingtime = 0;
         public override bool Do()
         {
-            if (starttime < 0)
-                starttime = STG.Stage.time.CurrentTime;
-            if (starttime + waitingtime >= STG.Stage.time.CurrentTime)
+            if (STG.Stage.script.waitstartpoint < 0)
+                STG.Stage.script.waitstartpoint = STG.Stage.time.CurrentTime;
+            if (STG.Stage.script.waitstartpoint + waitingtime >= STG.Stage.time.CurrentTime)
             {
                 //Console.WriteLine(starttime + waitingtime - script.stage.time.CurrentTime);
                 return false;
             }
             else
             {
-                starttime = -1;
+                STG.Stage.script.waitstartpoint = -1;
                 return true;
             }
         }
@@ -162,7 +161,7 @@ namespace SharpSTG
                     }
                 }
         }
-
+        public long waitstartpoint = -1;
         bool commandbreak = false;
         public void BreakCommand() { commandbreak = true; }
         public void FrameUpdate()

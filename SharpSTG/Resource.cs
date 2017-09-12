@@ -22,7 +22,6 @@ namespace SharpSTG
         public static void Load(Device device) {
             Resource.device = device;
             textures["reimu"] = Texture.FromFile(device, "reimu.png");
-            textures["1"] = Texture.FromFile(device, "1.png");
             textures["enemy1"] = Texture.FromFile(device, "enemy1.png");
 
             BulletSprite reimu_direct = new BulletSprite();

@@ -24,6 +24,9 @@ namespace SharpSTG
             this.Right = right;
             this.Bottom = bottom;
         }
+        static QuadTexRect[] one = new QuadTexRect[] { new QuadTexRect(0, 0, 1, 1) };
+
+        internal static QuadTexRect[] One { get => one; }
     }
     class StgCharacter
     {
@@ -32,14 +35,13 @@ namespace SharpSTG
         protected float zoomrate = 10;
         protected float uvWidth = 1;
         protected float uvHeight = 1;
+
+        protected QuadTexRect[] IdleUVs = QuadTexRect.One;
+        protected QuadTexRect[] Idle2LeftUVs = QuadTexRect.One;
+        protected QuadTexRect[] LeftUVs = QuadTexRect.One;
+        protected QuadTexRect[] Idle2RightUVs = QuadTexRect.One;
+        protected QuadTexRect[] RightUVs = QuadTexRect.One;
         
-        protected QuadTexRect[] IdleUVs=new QuadTexRect[] {new QuadTexRect(0,0,1,1) };
-        protected QuadTexRect[] Idle2LeftUVs = new QuadTexRect[] { new QuadTexRect(0, 0, 1, 1) };
-        protected QuadTexRect[] LeftUVs = new QuadTexRect[] { new QuadTexRect(0, 0, 1, 1) };
-        protected QuadTexRect[] Idle2RightUVs = new QuadTexRect[] { new QuadTexRect(0, 0, 1, 1) };
-        protected QuadTexRect[] RightUVs = new QuadTexRect[] { new QuadTexRect(0, 0, 1, 1) };
-
-
         VertexBuffer vbuffer;
         long lefttime = 0;
         long righttime = 0;
