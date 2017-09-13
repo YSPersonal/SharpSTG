@@ -30,7 +30,10 @@ namespace SharpSTG
                     enemylist.Remove(e);
                     break;
                 }
-            
+
+            foreach (var e in bullets)
+                e.FrameUpdate();
+
             time.FrameUpdate();
             script.FrameUpdate();
 

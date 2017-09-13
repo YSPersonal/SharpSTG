@@ -52,7 +52,7 @@ namespace SharpSTG
                 b = new DirectBullet(start, target, speed);
             else
                 b = new DirectBullet(start, angle, speed);
-
+            b.bulletRect = bulletimage;
             STG.Stage.bullets.Add(b);
             return true;
         }
@@ -61,6 +61,7 @@ namespace SharpSTG
         Vector3 target;
         float speed;
         float angle;
+        Rectangle bulletimage;
         public override void OnCreate(string parameter)
         {
             
@@ -68,9 +69,9 @@ namespace SharpSTG
             var s = parameter.Split(' ');
             var s0 = s[0].Split(',');
             var s1 = s[1].Split(',');
-            start = new Vector3(x0, y0, 0);
             float x0 = float.Parse(s0[0]);
             float y0 = float.Parse(s0[1]);
+            start = new Vector3(x0, y0, 0);
 
             if (s1.Length > 1)
             {
@@ -85,7 +86,7 @@ namespace SharpSTG
                 target = start;
             }
             speed = float.Parse(s[2]);
-
+            bulletimage = Resource.rectangle[s[3]];
         }
     }
 

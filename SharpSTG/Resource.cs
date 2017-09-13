@@ -22,9 +22,12 @@ namespace SharpSTG
             Resource.device = device;
             textures["reimu"] = Texture.FromFile(device, "reimu.png");
             textures["enemy1"] = Texture.FromFile(device, "enemy1.png");
-
+            textures["bullet1"] = Texture.FromFile(device, "bullet1.png");
             rectangle["reimu_bullet1"] = new Rectangle(new TexRect(0, 0.570313f, 0.054688f, 0.617188f), textures["reimu"], 7, 6,90);
-                        
+            rectangle["bullet_1_1"] = new Rectangle(new TexRect(0, 0, 0.0625f, 0.0625f), textures["bullet1"], 5, 5, 90);
+            rectangle["bullet_1_2"] = new Rectangle(new TexRect(0, 0, 0.0625f, 0.0625f), textures["bullet1"], 5, 5, 90);
+            rectangle["bullet_1_3"] = new Rectangle(new TexRect(0, 0, 0.0625f, 0.0625f), textures["bullet1"], 5, 5, 90);
+            rectangle["bullet_1_4"] = new Rectangle(new TexRect(0, 0, 0.0625f, 0.0625f), textures["bullet1"], 5, 5, 90);
             path["path0"]= new WayPointPath(WayPointPath.Smooth2(new Vector3[] {
                 new Vector3(-40,50,0),
                 new Vector3(-40,-50,0),
