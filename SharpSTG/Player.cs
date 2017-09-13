@@ -60,11 +60,7 @@ namespace SharpSTG
             Resource.device.SetTransform(TransformState.World, mat);
             DrawSprite();
 
-            foreach (var b in bullets)
-            {
-                b.FrameUpdate();
-                b.Draw();
-            }
+            bullets.FrameUpdate();
 
             if (AutoFire != null)
             {
@@ -73,7 +69,7 @@ namespace SharpSTG
             }
         }
 
-        protected List<Bullet> bullets = new List<Bullet>();
+        protected BulletManager bullets = new BulletManager();
         public virtual void Fire()
         {
         }

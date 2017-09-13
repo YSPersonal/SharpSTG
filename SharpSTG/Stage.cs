@@ -8,13 +8,14 @@ namespace SharpSTG
 {
     class Stage
     {
-        public List<Enemy> enemylist = new List<Enemy>();
+        public EnemyManager enemy = new EnemyManager();
         public Timeflow time = new Timeflow();
         public Script script = new Script();
-        public List<Bullet> bullets = new List<Bullet>();
+        public BulletManager bullets = new BulletManager();
+
         public virtual void FrameUpdate()
         {
-            foreach (var e in enemylist)
+            foreach (var e in enemy)
             {
 
                 if (e.OnStage)
@@ -24,16 +25,14 @@ namespace SharpSTG
                 }
             }
 
-            foreach (var e in enemylist)
+            foreach (var e in enemy)
                 if (e.IsTimeout)
                 {
-                    enemylist.Remove(e);
+                    enemy.Remove(e);
                     break;
                 }
 
-            foreach (var e in bullets)
-                e.FrameUpdate();
-
+            bullets.FrameUpdate();
             time.FrameUpdate();
             script.FrameUpdate();
 
@@ -44,7 +43,7 @@ namespace SharpSTG
             enemy.time = time;
             if (path != null)
                 enemy.Path = path;
-            enemylist.Add(enemy);
+            this.enemy.Add(enemy);
         }
         public void SpawnEnemy(Enemy enemy, Path path = null)
         {

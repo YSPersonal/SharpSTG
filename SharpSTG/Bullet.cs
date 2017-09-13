@@ -91,22 +91,33 @@ namespace SharpSTG
         }
     }
 
-    class BulletManager
-    {
-        List<Bullet> bullets = new List<Bullet>();
+    class BulletManager:LinkedList<Bullet>
+    {      
 
         public void FrameUpdate()
         {
-            foreach (var i in bullets)
+            //var last = this.Last;
+            var current = this.First;
+            while (current!=null)
             {
-                if (i.TimeOut)
-                    bullets.Remove(i);
+                if (current.Value.TimeOut)
+                {
+                    var next = current.Next;
+                    Remove(current);
+                    current = next;
+                }
                 else
                 {
-                    i.FrameUpdate();
-                    i.Draw();
+                    current.Value.FrameUpdate();
+                    current.Value.Draw();
+                    current = current.Next;
                 }
-            }
+            }            
+           
+        }
+        public void Add(Bullet bullet)
+        {
+            base.AddLast(bullet);
         }
     }
 

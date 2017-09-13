@@ -26,7 +26,7 @@ namespace SharpSTG
         }
         static TexRect[] one = new TexRect[] { new TexRect(0, 0, 1, 1) };
 
-        internal static TexRect[] One { get => one; }
+        internal static TexRect[] One { get { return one; } }
     }
     class StgCharacter
     {

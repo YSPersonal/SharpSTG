@@ -50,14 +50,34 @@ namespace SharpSTG
 
     }
 
-    //class StaticEnemy : Enemy
-    //{
-    //    public StaticEnemy(string textureName)
-    //    {
-    //        texture = Resource.textures[textureName];
-            
-    //    }
-    //}
+    class EnemyManager : LinkedList<Enemy>
+    {
+        public void FrameUpdate()
+        {
+            //var last = this.Last;
+            var current = this.First;
+            while (current != null)
+            {
+                if (current.Value.IsTimeout)
+                {
+                    var next = current.Next;
+                    Remove(current);
+                    current = next;
+                }
+                else
+                {
+                    current.Value.FrameUpdate();
+                    current.Value.Draw();
+                    current = current.Next;
+                }
+            }
+
+        }
+        public void Add(Enemy enemy)
+        {
+            base.AddLast(enemy);
+        }
+    }
 
     class DemoEnemy : Enemy
     {

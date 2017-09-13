@@ -94,7 +94,7 @@ namespace SharpSTG
     {
         public override bool Do()
         {
-            STG.Stage.enemylist.Clear();
+            STG.Stage.enemy.Clear();
             return true;
         }
     }
@@ -188,7 +188,7 @@ namespace SharpSTG
                     return true;
 
                 case "enemy_clear":
-                    return STG.Stage.enemylist.Count == 0;
+                    return STG.Stage.enemy.Count == 0;
             }
             return false;
         }
