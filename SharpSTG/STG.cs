@@ -17,7 +17,8 @@ namespace SharpSTG
         static Direct3D D3D;
         static Device device;
         static RenderForm form;
-
+        public static Player player;
+        
         public static void LoadResource()
         {
             form = new RenderForm("SharpSTG");
@@ -39,7 +40,7 @@ namespace SharpSTG
         
         public static void Run()
         {
-            Player player = new Reimu();
+            player = new Reimu();
             Stage.time = new Timeflow();
             Stage.time.Pause = false;
             RenderLoop.Run(form, () =>

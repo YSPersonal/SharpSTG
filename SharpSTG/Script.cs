@@ -45,6 +45,29 @@ namespace SharpSTG
 
     class SCFire : ScriptCommand
     {
+        Vector3 getVector(string str)
+        {
+            if (str == "player")
+                return STG.player.Position;
+            if (str == "enemy")
+                return Enemy.currentUpdate.Position;
+
+            else
+            {
+                var s = str.Split('+');
+                if (s.Length == 1)
+                {
+                    var ss = s[0].Split(',');
+                    return new Vector3(float.Parse(ss[0]), float.Parse(ss[1]), 0);
+                }
+                var sum = Vector3.Zero;
+                foreach (var i in s)
+                    sum += getVector(i);
+                return sum;
+            }
+        }
+
+
         public override bool Do()
         {
             DirectBullet b = null;
@@ -64,27 +87,18 @@ namespace SharpSTG
         Rectangle bulletimage;
         public override void OnCreate(string parameter)
         {
-            
-            //
             var s = parameter.Split(' ');
-            var s0 = s[0].Split(',');
-            var s1 = s[1].Split(',');
-            float x0 = float.Parse(s0[0]);
-            float y0 = float.Parse(s0[1]);
-            start = new Vector3(x0, y0, 0);
+           
+            start = getVector(s[0]);
+            target = start;
+            angle = 0;
 
-            if (s1.Length > 1)
+            if(!float.TryParse(s[1],out angle))
             {
-                float x1 = float.Parse(s1[0]);
-                float y1 = float.Parse(s1[1]);
-                target = new Vector3(x1, y1, 0);
                 angle = 0;
+                target = getVector(s[1]);
             }
-            else
-            {
-                angle = float.Parse(s[1]);
-                target = start;
-            }
+            
             speed = float.Parse(s[2]);
             bulletimage = Resource.rectangle[s[3]];
         }

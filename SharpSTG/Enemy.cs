@@ -31,22 +31,28 @@ namespace SharpSTG
             IsTimeout = true;
         }
         public bool OnStage { get { return time.CurrentTime >= ShowTime; } }
-        public void FrameUpdate()
+
+        public static Enemy currentUpdate { get; private set; }
+        Script script=null;
+
+        public virtual void FrameUpdate()
         {
+            currentUpdate = this;
             float distance = (time.CurrentTime - ShowTime) * Speed / 1000;
             if (distance > Path.length)
                 TimeOut();
             if (Path != null)
                 Position = Path.GetPosition(distance);
-        }
-
-        Script script=null;
-
-        public virtual void OnUpdate()
-        {
             if (script != null)
                 script.FrameUpdate();
+
+            currentUpdate = null;
         }
+
+
+        //public virtual void OnUpdate()
+        //{
+        //}
 
     }
 

@@ -26,6 +26,10 @@ namespace SharpSTG
                 Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.DemoEnemy 1400 path0"),
                 Script.CreateCommand("SharpSTG.SCSpawn SharpSTG.DemoEnemy 1600 path0"),
                 Script.CreateCommand("SharpSTG.SCWait 2000"),
+                Script.CreateCommand("SharpSTG.SCFire 0,50 150 50 bullet_1_1"),
+                Script.CreateCommand("SharpSTG.SCFire 0,50 160 50 bullet_1_1"),
+                Script.CreateCommand("SharpSTG.SCFire 0,50 170 50 bullet_1_1"),
+                Script.CreateCommand("SharpSTG.SCFire 0,50 180 50 bullet_1_1"),
                 Script.CreateCommand("SharpSTG.SCRepeat begin")
 
             };
