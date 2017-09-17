@@ -72,7 +72,7 @@
     <Compile Include="Stage.cs" />
     <Compile Include="STG.cs" />
     <Compile Include="StgCharacter.cs" />
-    <Compile Include="StgFrame.cs" />
+    <Compile Include="Math.cs" />
     <Compile Include="Time.cs" />
   </ItemGroup>
   <ItemGroup>

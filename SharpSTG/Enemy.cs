@@ -49,10 +49,10 @@ namespace SharpSTG
             currentUpdate = null;
         }
 
-
-        //public virtual void OnUpdate()
-        //{
-        //}
+        public virtual bool HitDetect(Vector3 bullet, float bulletSize)
+        {
+            return Math.HitDetect(bullet, bulletSize, this.Position, 5);
+        }       
 
     }
 

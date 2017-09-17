@@ -14,28 +14,28 @@ namespace SharpSTG
     {
         public static Stage Stage { get; set; }
         
-        static Direct3D D3D;
-        static Device device;
-        static RenderForm form;
+        //static Direct3D D3D;
+        //static Device device;
+        //static RenderForm form;
         public static Player player;
-        
+        public static Math Math { get; private set; }
         public static void LoadResource()
         {
-            form = new RenderForm("SharpSTG");
-            form.Width = 480;
-            form.Height = 640;
+            Resource.form = new RenderForm("SharpSTG");
+            Resource.form.Width = 480;
+            Resource.form.Height = 640;
 
-            D3D = new Direct3D();
-            device = new Device(D3D, 0, DeviceType.Hardware, form.Handle, CreateFlags.HardwareVertexProcessing, 
-                new PresentParameters(form.ClientSize.Width, form.ClientSize.Height));
-            Resource.Load(device);
+            Resource.D3D = new Direct3D();
+            Resource.device = new Device(Resource.D3D, 0, DeviceType.Hardware, Resource.form.Handle, CreateFlags.HardwareVertexProcessing, 
+                new PresentParameters(Resource.form.ClientSize.Width, Resource.form.ClientSize.Height));
+            Resource.Load(Resource.device);
 
             Time.Setup();
-            Input.Init(form);
-            Debug.Init(device);
+            Input.Init(Resource.form);
+            Debug.Init(Resource.device);
 
-            new StgFrame(form).SetAsGlobal();
-            StgFrame.Global.SetMatrix(device);
+            //new StgMath(form).SetAsGlobal();
+            //StgMath.Global.SetMatrix(device);
         }
         
         public static void Run()
@@ -43,29 +43,32 @@ namespace SharpSTG
             player = new Reimu();
             Stage.time = new Timeflow();
             Stage.time.Pause = false;
-            RenderLoop.Run(form, () =>
+
+            Math = new Math();
+            Math.SetCoordinate();
+            RenderLoop.Run(Resource.form, () =>
             {              
 
                 Time.FrameUpdate();
-                device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.CornflowerBlue, 1.0f, 0);
-                device.BeginScene();
+                Resource.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.CornflowerBlue, 1.0f, 0);
+                Resource.device.BeginScene();
 
-                device.SetRenderState(RenderState.ZEnable, true);
-                device.SetRenderState(RenderState.Lighting, false);
-                device.SetRenderState(RenderState.AlphaBlendEnable, true);
-                device.SetRenderState(RenderState.SourceBlend, 5);
+                Resource.device.SetRenderState(RenderState.ZEnable, true);
+                Resource.device.SetRenderState(RenderState.Lighting, false);
+                Resource.device.SetRenderState(RenderState.AlphaBlendEnable, true);
+                Resource.device.SetRenderState(RenderState.SourceBlend, 5);
 
                 player.Draw();
                 Stage.FrameUpdate();
 
-                device.EndScene();
-                device.Present();
+                Resource.device.EndScene();
+                Resource.device.Present();
                 Input.Global.ClearPressedEvent();
 
             });
 
-            device.Dispose();
-            D3D.Dispose();
+            Resource.device.Dispose();
+            Resource.D3D.Dispose();
         }
     }
 }

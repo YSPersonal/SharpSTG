@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using SharpDX.Direct3D9;
+using SharpDX.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace SharpSTG
 {
     class Resource
     {
+        public static RenderForm form;
+        public static Direct3D D3D;
         public static Device device;
         public static Dictionary<string, Texture> textures=new Dictionary<string, Texture>();
         public static Dictionary<string, VertexBuffer> vbuffers=new Dictionary<string, VertexBuffer>();

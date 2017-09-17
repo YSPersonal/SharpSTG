@@ -63,12 +63,12 @@ namespace SharpSTG
             }
             else
             {
-                lefttime = Math.Min(Idle2LeftUVs.Length * 50, lefttime);
-                righttime = Math.Min(Idle2RightUVs.Length * 50, righttime);
+                lefttime = System.Math.Min(Idle2LeftUVs.Length * 50, lefttime);
+                righttime = System.Math.Min(Idle2RightUVs.Length * 50, righttime);
                 lefttime -= Time.DeltaTime;
-                lefttime = Math.Max(0, lefttime);
+                lefttime = System.Math.Max(0, lefttime);
                 righttime -= Time.DeltaTime;
-                righttime = Math.Max(0, righttime);
+                righttime = System.Math.Max(0, righttime);
             }
         }
         

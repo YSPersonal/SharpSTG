@@ -54,7 +54,7 @@ namespace SharpSTG
                 speed = SlowSpeed;
             OnMove(Position, direction * speed);
             Position += direction * Time.DeltaTimeSeconds * speed;
-            Position = StgFrame.Global.InBox(Position, Width / 2, Height / 2);
+            Position = STG.Math.InBox(Position, Width / 2, Height / 2);
 
             Matrix mat = Matrix.Translation(Position);
             Resource.device.SetTransform(TransformState.World, mat);

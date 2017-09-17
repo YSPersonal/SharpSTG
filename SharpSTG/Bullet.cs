@@ -56,7 +56,7 @@ namespace SharpSTG
 
             
             Matrix matWorld = Matrix.Translation(position);
-            Matrix matRotation = Matrix.RotationZ((float)(angle+angleOffset * Math.PI / 180));
+            Matrix matRotation = Matrix.RotationZ((float)(angle + angleOffset * System.Math.PI / 180));
 
             device.SetTransform(TransformState.World, matRotation * matWorld);
 
@@ -131,9 +131,9 @@ namespace SharpSTG
         public DirectBullet(Vector3 start, float angle, float speed)
         {
             startPosition = start;
-            var rad = angle * Math.PI / 180;
+            var rad = angle * System.Math.PI / 180;
             Rotation = (float)rad;
-            direction = new Vector3(-(float)Math.Sin(rad), (float)Math.Cos(rad), 0);
+            direction = new Vector3(-(float)System.Math.Sin(rad), (float)System.Math.Cos(rad), 0);
             Speed = speed;
         }
         public DirectBullet(Vector3 start, Vector3 target, float speed)
@@ -142,9 +142,9 @@ namespace SharpSTG
             this.startPosition = start;
             this.direction = target - start;
             direction.Normalize();
-            this.Rotation = (float)Math.Asin(Vector3.Cross(direction, Vector3.Up).Length());
+            this.Rotation = (float)System.Math.Asin(Vector3.Cross(direction, Vector3.Up).Length());
             if (Vector3.Dot(direction, Vector3.Up) < 0)
-                Rotation = (float)Math.PI - Rotation;
+                Rotation = (float)System.Math.PI - Rotation;
             this.Speed = speed;
         }
 
