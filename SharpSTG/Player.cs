@@ -54,7 +54,7 @@ namespace SharpSTG
                 speed = SlowSpeed;
             OnMove(Position, direction * speed);
             Position += direction * Time.DeltaTimeSeconds * speed;
-            Position = STG.Math.InBox(Position, Width / 2, Height / 2);
+            Position = STG.Math.Box(Position, Width / 2, Height / 2);
 
             Matrix mat = Matrix.Translation(Position);
             Resource.device.SetTransform(TransformState.World, mat);
@@ -69,7 +69,7 @@ namespace SharpSTG
             }
         }
 
-        protected BulletManager bullets = new BulletManager();
+        public BulletManager bullets = new BulletManager();
         public virtual void Fire()
         {
         }

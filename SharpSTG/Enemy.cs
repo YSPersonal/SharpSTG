@@ -20,40 +20,44 @@ namespace SharpSTG
             }
 
         }
-        public Timeflow time { private get; set; }
+        public Timeflow Time { private get; set; }
         public Path Path { get; set; }
         public long ShowTime { get; set; }
         public float Speed = 100f;
-        //bool timeout = false;
         public bool IsTimeout { get; private set; } = false;
-        public void TimeOut()
-        {
-            IsTimeout = true;
-        }
-        public bool OnStage { get { return time.CurrentTime >= ShowTime; } }
+        public bool IsKilled { get { return HP <= 0; } }
+        public bool Active { get { return !(IsTimeout || IsKilled); } }
+        public bool OnStage { get { return Time.CurrentTime >= ShowTime; } }
 
-        public static Enemy currentUpdate { get; private set; }
+        public static Enemy CurrentUpdate { get; private set; }
         Script script=null;
 
         public virtual void FrameUpdate()
         {
-            currentUpdate = this;
-            float distance = (time.CurrentTime - ShowTime) * Speed / 1000;
+            CurrentUpdate = this;
+            float distance = (Time.CurrentTime - ShowTime) * Speed / 1000;
             if (distance > Path.length)
-                TimeOut();
+                IsTimeout = true;
+            
             if (Path != null)
                 Position = Path.GetPosition(distance);
             if (script != null)
                 script.FrameUpdate();
-
-            currentUpdate = null;
+            CurrentUpdate = null;
+            Draw();
         }
 
-        public virtual bool HitDetect(Vector3 bullet, float bulletSize)
+        public int HP { get; set; } = 20;
+        public virtual bool HitDetect(Bullet bullet)
         {
-            return Math.HitDetect(bullet, bulletSize, this.Position, 5);
+            if (!OnStage)
+                return false;
+            return Math.HitDetect(bullet.Position, bullet.HitSize, this.Position, 5);
         }       
-
+        public virtual void OnBulletHit(Bullet bullet)
+        {
+            HP -= bullet.Damage;
+        }
     }
 
     class EnemyManager : LinkedList<Enemy>
@@ -64,7 +68,7 @@ namespace SharpSTG
             var current = this.First;
             while (current != null)
             {
-                if (current.Value.IsTimeout)
+                if (!current.Value.Active)
                 {
                     var next = current.Next;
                     Remove(current);

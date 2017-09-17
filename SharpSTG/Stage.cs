@@ -15,32 +15,25 @@ namespace SharpSTG
 
         public virtual void FrameUpdate()
         {
-            foreach (var e in enemy)
-            {
-
-                if (e.OnStage)
-                {
-                    e.FrameUpdate();
-                    e.Draw();
-                }
-            }
+            enemy.FrameUpdate();
 
             foreach (var e in enemy)
-                if (e.IsTimeout)
-                {
-                    enemy.Remove(e);
-                    break;
-                }
-
+                foreach (var b in STG.player.bullets)
+                    if (e.HitDetect(b))
+                    {
+                        e.OnBulletHit(b);
+                        b.HitTarget = e;
+                    }
+            
             bullets.FrameUpdate();
             time.FrameUpdate();
             script.FrameUpdate();
-
         }
+
         public void SpawnEnemy(Enemy enemy, long spawntime, Path path = null)
         {
             enemy.ShowTime = spawntime;
-            enemy.time = time;
+            enemy.Time = time;
             if (path != null)
                 enemy.Path = path;
             this.enemy.Add(enemy);

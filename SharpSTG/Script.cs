@@ -50,7 +50,7 @@ namespace SharpSTG
             if (str == "player")
                 return STG.player.Position;
             if (str == "enemy")
-                return Enemy.currentUpdate.Position;
+                return Enemy.CurrentUpdate.Position;
 
             else
             {

@@ -34,13 +34,21 @@ namespace SharpSTG
             Resource.device.SetTransform(TransformState.Projection, Matrix.OrthoLH(HorizontalRange, VerticalRange, 0, 1));
         }
 
-        public Vector3 InBox(Vector3 input, float marginX = 0, float marginY=0)
+        public Vector3 Box(Vector3 input, float marginX = 0, float marginY=0)
         {
             return new Vector3(
             System.Math.Min(System.Math.Max(input.X, -HorizontalRange / 2+ marginX), HorizontalRange / 2- marginX),
             System.Math.Min(System.Math.Max(input.Y, -VerticalRange / 2+ marginY), VerticalRange / 2- marginY),
             input.Z
             );
+        }
+
+        public bool IsInBox(Vector3 input, float marginX = 0, float marginY = 0)
+        {
+            return input.X > -HorizontalRange / 2 + marginX &&
+                input.X < HorizontalRange / 2 - marginX &&
+                input.Y > -VerticalRange / 2 + marginY &&
+                input.Y < VerticalRange / 2 - marginY;
         }
 
         public static bool HitDetect(Vector3 bullet, float bulletRadius, Vector3 target, float targetRadius)

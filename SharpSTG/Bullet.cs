@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SharpSTG
 {
-    
+
     class Rectangle
     {
         TexRect texRect;
@@ -14,8 +14,8 @@ namespace SharpSTG
         float height;
         public float angleOffset = 0;
         VertexBuffer vbuffer = null;
-        
-        public Rectangle(TexRect texRect, Texture texture, float width, float height, float angleOffset=0)
+
+        public Rectangle(TexRect texRect, Texture texture, float width, float height, float angleOffset = 0)
         {
             this.texRect = texRect;
             this.texture = texture;
@@ -54,7 +54,7 @@ namespace SharpSTG
             device.SetStreamSource(0, vbuffer, 0, sizeof(float) * 5);
             //device.SetRenderState(RenderState.AlphaBlendEnable, true);
 
-            
+
             Matrix matWorld = Matrix.Translation(position);
             Matrix matRotation = Matrix.RotationZ((float)(angle + angleOffset * System.Math.PI / 180));
 
@@ -65,24 +65,27 @@ namespace SharpSTG
         }
     }
 
-   
+
     abstract class Bullet
     {
         public Rectangle bulletRect;
-
+        public StgCharacter HitTarget = null;
         public long FlyingTime { get { return Time.TotalTime - StartTime; } }
         public bool TimeOut { get { return FlyingTime > LifeTime; } }
+        public bool Active { get { return STG.Math.IsInBox(Position) && !TimeOut && HitTarget == null; } }
         public long LifeTime { get; set; }
         public long StartTime { get; private set; }
-
+        public int Damage { get; set; } = 5;
+        public float HitSize { get; set; } = 5;
         public Vector3 Position { get; protected set; }
         public float Rotation { get; protected set; }
         public Bullet()
         {
             StartTime = Time.TotalTime;
-            LifeTime = 2000;
+            LifeTime = long.MaxValue;
             Position = Vector3.Zero;
             Rotation = 0;
+            //Console.WriteLine("new bullet");
         }
         public abstract void FrameUpdate();
         public void Draw()
@@ -91,16 +94,16 @@ namespace SharpSTG
         }
     }
 
-    class BulletManager:LinkedList<Bullet>
-    {      
+    class BulletManager : LinkedList<Bullet>
+    {
 
         public void FrameUpdate()
         {
             //var last = this.Last;
             var current = this.First;
-            while (current!=null)
+            while (current != null)
             {
-                if (current.Value.TimeOut)
+                if (!current.Value.Active)
                 {
                     var next = current.Next;
                     Remove(current);
@@ -112,13 +115,26 @@ namespace SharpSTG
                     current.Value.Draw();
                     current = current.Next;
                 }
-            }            
-           
+            }
+            
         }
         public void Add(Bullet bullet)
         {
             base.AddLast(bullet);
         }
+
+        //public delegate bool RemoveCondition(Bullet bullet);
+        //public void Remove(RemoveCondition check)
+        //{
+        //    var b = First;
+        //    while (b != null)
+        //    {
+        //        var c = b;
+        //        b = b.Next;
+        //        if (check(c.Value))
+        //            Remove(c);
+        //    }
+        //}
     }
 
 
@@ -135,6 +151,7 @@ namespace SharpSTG
             Rotation = (float)rad;
             direction = new Vector3(-(float)System.Math.Sin(rad), (float)System.Math.Cos(rad), 0);
             Speed = speed;
+            Position = start;
         }
         public DirectBullet(Vector3 start, Vector3 target, float speed)
         {
@@ -146,6 +163,7 @@ namespace SharpSTG
             if (Vector3.Dot(direction, Vector3.Up) < 0)
                 Rotation = (float)System.Math.PI - Rotation;
             this.Speed = speed;
+            Position = start;
         }
 
         public override void FrameUpdate()

@@ -19,6 +19,8 @@ namespace SharpSTG
         //static RenderForm form;
         public static Player player;
         public static Math Math { get; private set; }
+        //public static float FPS { get; private set; } = 0;
+        public static FPS fps;
         public static void LoadResource()
         {
             Resource.form = new RenderForm("SharpSTG");
@@ -36,6 +38,7 @@ namespace SharpSTG
 
             //new StgMath(form).SetAsGlobal();
             //StgMath.Global.SetMatrix(device);
+            fps = new FPS();
         }
         
         public static void Run()
@@ -46,10 +49,14 @@ namespace SharpSTG
 
             Math = new Math();
             Math.SetCoordinate();
+
+            //int frameCount = 0;
             RenderLoop.Run(Resource.form, () =>
-            {              
+            {
+                //frameCount++;
 
                 Time.FrameUpdate();
+                fps.FrameUpdate();
                 Resource.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.CornflowerBlue, 1.0f, 0);
                 Resource.device.BeginScene();
 
@@ -61,14 +68,39 @@ namespace SharpSTG
                 player.Draw();
                 Stage.FrameUpdate();
 
+                Debug.DrawText(string.Format("{0} FPS", fps.Get), 0, 0);
+
                 Resource.device.EndScene();
                 Resource.device.Present();
                 Input.Global.ClearPressedEvent();
-
+                
             });
 
             Resource.device.Dispose();
             Resource.D3D.Dispose();
         }
+    }
+
+    class FPS
+    {
+        long time=0;
+        long frameCount=0;
+        float value = 0;
+
+        int size = 10;
+        float rate = 0.02f;
+        public void FrameUpdate() {
+            time += Time.DeltaTime;
+            frameCount++;
+
+            if (frameCount >= size)
+            {
+                float v = frameCount*1000.0f / time;
+                value = value *(1-rate) + v * rate;
+                time = 0;
+                frameCount = 0;
+            }
+        }
+        public float Get { get { return value; } }
     }
 }
