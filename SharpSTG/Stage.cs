@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpSTG.Script;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace SharpSTG
     {
         public EnemyManager enemy = new EnemyManager();
         public Timeflow time = new Timeflow();
-        public Script script = new Script();
+        public ScriptState script = new ScriptState();
         public BulletManager bullets = new BulletManager();
 
         public virtual void FrameUpdate()
@@ -25,6 +26,12 @@ namespace SharpSTG
                         b.HitTarget = e;
                     }
             
+            foreach(var b in bullets)
+                if (Math.HitDetect(b.Position, b.HitSize, STG.player.Position, 1))
+                {
+                    b.HitTarget = STG.player;
+                }
+
             bullets.FrameUpdate();
             time.FrameUpdate();
             script.FrameUpdate();

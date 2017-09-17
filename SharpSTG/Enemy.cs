@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using SharpDX.Direct3D9;
+using SharpSTG.Script;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace SharpSTG
         public bool OnStage { get { return Time.CurrentTime >= ShowTime; } }
 
         public static Enemy CurrentUpdate { get; private set; }
-        Script script=null;
+        ScriptState script=null;
 
         public virtual void FrameUpdate()
         {
